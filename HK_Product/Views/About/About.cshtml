@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="./hackproject.css">
+</head>
+
+<body>
+   
+    <div id="neck" class="w-100 mx-0 bg-secondary-subtle row flex-md-row flex-column align-items-center justify-content-center text-center col">
+        <div class="col col-md-7 d-flex flex-column p-5 h-100 align-items-start justify-content-start">
+            <h1 class="fw-bold">Who are we</h1>
+            <h4 class="text-start" id="languageChoose">我們是來自中華大學的學生，是一群初學網頁的同學組成的專案團隊</h4>
+        </div>
+        <div class="col col-md-5 p-5 h-100 d-flex align-items-end justify-content-md-end justify-content-center">
+            <img class=" w-75" src="./image/175538168.jpg" alt="">
+        </div>
+    </div>
+    <div id="abdomen" class="w-100 mx-0 bg-dark-subtle row p-5 col">
+        <h1 class="fw-bold" id="languageChoose">我們的理念</h1>
+        <h4 class="text-start" id="languageChoose">我們希望自己能夠在做中學習，保持理性沉穩的思維卻又不死板，活潑有創意。</h4>
+        <img class="w-100 h-75" src=" ~ /image/pexels-photo-3183150.jpeg" alt="">
+    </div>
+    <div id="knee" class="bg-body-secondary row mx-0 col py-5">
+        <div class="col py-5 d-flex h-100 justify-content-center">
+            <h1 class="fw-bold my-5">Enjoy The Challeng</h1>
+        </div>
+
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+
+    <script>
+        var language = document.getElementById("language");
+        var languageChoose = document.querySelectorAll("#languageChoose");
+        let languageData;
+        fetch('./AboutLanguage.json')
+            .then(response => response.json())
+            .then(data => {
+                language.addEventListener("change", function () {
+                    for (var item in data) {
+                        if (item == language.value) {
+
+                            languageData = Object.values(data[item]);
+                        }
+                    }
+                    languageChoose.forEach(function (item, index) {
+
+                        item.innerText = languageData[0][index];
+                    })
+                })
+                window.onload = function () {
+                    for (var item in data) {
+                        if (item == language.value) {
+
+                            languageData = Object.values(data[item]);
+                        }
+                    }
+                    languageChoose.forEach(function (item, index) {
+
+                        item.innerText = languageData[0][index];
+                    })
+                }
+            })
+            .catch(error => {
+                // 在這裡處理錯誤
+                console.error(error);
+            });
+
+    </script>
+</body>
+
+</html>

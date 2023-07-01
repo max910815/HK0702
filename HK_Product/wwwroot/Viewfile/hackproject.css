@@ -1,0 +1,174 @@
+@charset "UTF-8";
+#UserAvatar{
+
+}
+table {
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+body {
+    height: auto;
+    padding-top: 70px;
+}
+
+#header {
+    height: 70px;
+}
+#header button {
+  color: black;
+}
+#header h3 {
+  font-weight: bold;
+}
+#header a {
+  color: black;
+  text-decoration: none;
+}
+
+#neck {
+  margin-top: 70px;
+}
+#neck button {
+  height: 50px;
+}
+
+#knee .imgbox {
+  width: 150px;
+}
+#knee .imgbox img {
+  height: 90px;
+}
+
+#question {
+  overflow: auto;
+  resize: none;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+}
+#question::-webkit-scrollbar {
+  width: 10px; /* 設置滾動條的寬度 */
+}
+#question::-webkit-scrollbar-thumb {
+  background-color: #bbbbbb; /* 設置滾動條的顏色 */
+  border-radius: 5px; /* 設置滾動條的圓角 */
+}
+#question::-webkit-scrollbar-track {
+  background-color: #fff; /* 設置滾動條的背景顏色 */
+  border-radius: 5px; /* 設置滾動條的圓角 */
+  border: none; /* 去掉滾動條的邊框 */
+}
+
+.QABody {
+  margin-top: 70px;
+  height: calc(100vh - 70px);
+}
+
+#QAhead {
+  height: 90px;
+}
+
+#QABox {
+  height: calc(100vh - 160px);
+}
+#QABox #response img {
+  width: 70px;
+  height: auto;
+}
+#QABox textarea {
+  resize: none;
+}
+#QABox img {
+  height: 15px;
+}
+.custom-range::-webkit-slider-thumb {
+  background-color: white; /* 设置滑块的颜色 */
+  border: 1px gray solid;
+}
+
+.custom-range::-moz-range-thumb {
+  background-color: white; /* 设置滑块的颜色 */
+  border: 1px gray solid;
+}
+
+.custom-range::-ms-thumb {
+  background-color: white; /* 设置滑块的颜色 */
+  border: 1px #808080 solid;
+}
+
+#History {
+  z-index: 25;
+  position: relative;
+  display: none;
+  left: 0px;
+  height: calc(100% - 70px);
+}
+
+#Expand {
+  height: 50px;
+  width: 50px;
+  z-index: 50;
+  left: 20%;
+  top: 80px;
+}
+
+#StartUse {
+  z-index: 100;
+}
+
+#micro {
+  position: relative;
+}
+
+.custom-range::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, rgb(110, 104, 104) 50%, rgb(208, 208, 208) 0%);
+}
+
+.custom-range::-moz-range-track {
+  background: linear-gradient(to right, rgb(110, 104, 104) 50%, rgb(208, 208, 208) 0%);
+}
+
+.custom-range::-ms-track {
+  background: linear-gradient(to right, rgb(110, 104, 104) 50%, rgb(208, 208, 208) 0%);
+}
+
+@media (max-width: 575px) {
+  #micro {
+    position: absolute;
+    top: calc(0px - (100vh - 240px));
+    right: 20px;
+  }
+}
+@media (max-width: 767px) {
+  .QABody {
+    margin-top: 90px;
+    height: calc(100vh - 90px);
+  }
+  #header {
+    height: auto;
+  }
+  #StartUse {
+    display: none;
+  }
+  #History {
+    display: none;
+  }
+  #Expand {
+    left: 10px;
+    top: 200px;
+  }
+}
+@media (max-width: 1000px) and (min-width: 768px) {
+  #Expand {
+    left: 18%;
+    position: absolute;
+  }
+  #History {
+    position: absolute;
+  }
+}/*# sourceMappingURL=hackproject.css.map */

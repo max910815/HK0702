@@ -1,0 +1,52 @@
+﻿<navbar id="header" class="head bg-secondary row m-0 justify-content-center fixed-top col px-lg-5 px-md-2">
+    <div class="d-flex row h-100 px-0">
+        <div class="col-md-2 d-none  d-md-block w-auto h-100 px-0" id="logo">
+            <img class="h-100"
+                 src="https://media1.giphy.com/media/7kn27lnYSAE9O/200.webp?cid=ecf05e47mwx2cuu86ct9i80fhmbahffgmbvl4uq2i6o0b0rq&rid=200.webp&ct=g"
+                 alt="logo" class="logo">
+        </div>
+        <div class="col" id="PageLink">
+            <div class="row  h-100 justify-content-md-between">
+                <div class="col-12 col-lg-5 col-md-6 d-flex h-md-100 align-items-end mt-2 mt-md-0">
+                    <div class="row col flex-nowrap align-items-end h-50">
+                        <a type="button"  asp-controller="Home" asp-action="Index"
+                            class="col btn btn-secondary border-0 rounded-0 col border-end border-secondary-subtle px-0 px-lg-2">
+                                <h5 class="text-center mb-0 " id="languageChoose">首頁</h5>
+                            </a>
+                        </a>
+                        <a type="button" asp-controller="About" asp-action="About"
+                             class="col btn btn-secondary border-0 rounded-0 col border-end border-secondary-subtle px-0 px-lg-2">
+                                <h5 class="text-center mb-0" id="languageChoose">關於</h5>
+                            </a>
+                        </a>
+                        <a type="button" asp-controller="Member" asp-action="Member"
+                           class="col btn btn-secondary border-0 rounded-0 col border-md-end border-secondary-subtle">
+                            <h5 class="text-center mb-0">Member</h5>
+                        </a>
+                        </a>
+                        <a type="button"  asp-controller="Qagpt" asp-action="Qagpt"
+                           class="col btn btn-secondary border-0 rounded-0 col border-md-end border-secondary-subtle px-0 px-lg-2">
+                                <h5 class="text-center mb-0">QAGPT</h5>
+                            </a>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6 gap-3 d-flex align-items-center my-2 my-md-0">
+                   @* <button class="btn btn-primary w-50 fw-bold text-nowrap" id="languageChoose" asp-controller="Register" asp-action="Register">註冊</button>
+                    <button class="btn btn-info w-50 fw-bold text-nowrap" id="languageChoose" asp-controller="Register" asp-action="Login">登入</button>*@
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-info w-10 fw-bold text-nowrap rounded-circle" id="UserAvatar" asp-controller="Register" asp-action="Signout" type="button">@User.Identity.Name.Substring(0, 1)</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary w-50 fw-bold text-nowrap" id="languageChoose" asp-controller="Register" asp-action="Register">註冊</a>
+                        <a class="btn btn-info w-50 fw-bold text-nowrap" id="languageChoose" asp-controller="Register" asp-action="Login">登入</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</navbar>

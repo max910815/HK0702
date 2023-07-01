@@ -1,0 +1,335 @@
+﻿@model HK_Product.ViewModels.UserqViewModel;
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="./hackproject.css">
+</head>
+
+<body>
+    
+    <!--這是主要部分-->
+    <div class="QABody col bg-body-secondary mx-0 row">
+    <!--左邊的Start Use 及收縮區塊-->
+        @*<div class="leftStartBox col-3 h-100 bg-secondary-subtle p-4 position-relative"id="StartUse">
+            <button type="button" class="btn-close position-absolute" aria-label="Close" style="right:24px;top: 24px;"
+                id="StartUseBtn"></button>
+            <h4>Start Use</h4>
+            <h5>開始使用我們的客服機器人AI</h5>
+            <h6>1.第一步:</h5>
+                <h6>2.第二步:</h5>
+        </div>*@
+        <button type="button"
+            class="btn position-absolute btn-outline-secondary p-0 rounded-2 d-flex align-items-center justify-content-center"
+            aria-label="Close" id="Expand" >
+
+            <img class="h-50 " src="./image/expand-arrows.png" alt="">
+        </button>
+        <div class="leftStartBox col-md-3 col-sm-5 col-8 bg-secondary-subtle p-4 " id="record">  
+            
+            <div class="h-100  overflow-y-auto">
+        <!--收縮部分-->
+                <h4>record </h4>
+                <div class="h-50 border-bottom border-secondary-subtle">
+                    <button class="btn btn-secondary w-100 mt-3 p-2" id="NewChat" onclick="deleteElements()" onclick="addChatRoom()">
+                        <h5 class="m-0">New Chat</h5>
+                    </button>
+
+                    @*foreach*@
+                    <div class="btn btn-secondary w-100 mt-2 p-2 d-flex justify-content-between" id="chatRooms">
+                        <h5 class="m-0">Name</h5>
+                        <button type="button" class="btn-close btn-close-white" aria-label="Close" id="ChatClose"></button>
+                    </div>
+                    
+
+                </div>
+                <label for="">Mode</label>
+                <div class="dropdown mt-1">
+                    <button class="w-100 btn btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <p class="overflow-hidden p-0 m-0">
+                            Complete
+                        </p>
+                    </button>
+                    <ul class="dropdown-menu w-100">
+                        <li><a class="w-100 dropdown-item" href="#">Complete</a></li>
+                        <li><a class="w-100 dropdown-item" href="#">Chat</a></li>
+                        <li><a class="w-100 dropdown-item" href="#">Other</a></li>
+                    </ul>
+                </div>
+                <label class="mt-2" for="">Modal</label>
+                <div class="dropdown mt-1">
+                    <button class="w-100 btn btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <p class="overflow-hidden p-0 m-0">
+                            text-danvic-003
+                        </p>
+                    </button>
+                    <ul class="dropdown-menu w-100">
+                        <li><a class="w-100 dropdown-item" href="#">text-danvic-003</a></li>
+                        <li><a class="w-100 dropdown-item" href="#">Chat</a></li>
+                        <li><a class="w-100 dropdown-item" href="#">Other</a></li>
+                    </ul>
+                </div>
+                <div class="mb-3 mt-2 custom-range-container">
+                    <div class="d-flex justify-content-between">
+                        <label for="rangeInput" class="form-label overflow-hidden">Template</label>
+                        <span class="px-2" id="rangeValue">1</span>
+                    </div>
+                    <input type="range" class="form-range custom-range" id="rangeInput" min="0" max="2" step="0.01" value="1">
+                
+                </div>
+                <button class="btn btn-secondary w-100 mt-3 p-2" id="FileUpLoad">
+                    <h5 class="m-0">會員檔案上傳</h5>
+                </button>
+            </div>
+
+        </div>
+        <div class="col d-flex flex-column bg-light">
+            <div class="row px-3 py-4 border-bottom border-dark-subtle align-items-center justify-content-between"id="QAhead">
+                <h4 class="w-auto m-0 fw-bold">QAGPT</h4>
+                <div class="w-auto d-flex flex-row row gap-3 justify-content-md-end justify-content-start ">
+
+                    </select>
+                </div>
+            </div>
+            <div class="col h-100 row bg-light p-0">
+                <div class="col d-flex flex-column justify-content-between position-relative p-0" id="QABox">
+                    <div class=" flex-column h-100 overflow-y-scroll pb-5 bg-dark-subtle" id="question" id="toBeDeleted">
+        <!--對話部分-->
+        <!--AI回的-->
+                        <div class=" toBeDeleted border-bottom border-dark-subtle w-100 h-auto bg-dark-subtle p-4 ps-5 row align-items-sm-center justify-content-center m-0 flex-column flex-sm-row" id="response">
+                            <img class="p-0 col-2 m-3" src="./image/175538168.jpg" alt="">
+                            <p class="col" >
+                                外的都覺得，大家都還是大概就啊下一個，一件都是的風格，有這，隱特典今沒有，瘋狂是第一。
+                                
+                                跟你支還希望我會去，戀愛到了的東西便利商⋯蠻好但我漸漸這就可以。
+                                
+                                少讓我覺得活著其實沒想起來，什麼的時夾真的好：一樣是是怎樣，小時覺，其他狀態定將他起來就發混亂看有，肚子見尤其是。不會跟天還歡迎的東好，就您好裡有什我的心喜歡，要這喜歡喜歡真的把自己不是說。
+                                
+                                很可等等這的完全不符，是想希望型這樣對也很比起自己要，的經驗這兩之後最新那些，起來的動畫不錯洗這麼會。
+                            </p>
+                        </div>
+        <!--我們問的 記得align-items-end 跟 flex-sm-row-reverse-->
+
+
+                        <div class=" toBeDeleted border-bottom border-dark-subtle w-100 h-auto bg-dark-subtle p-4 ps-5 row align-items-sm-center align-items-end justify-content-center m-0 flex-column flex-sm-row-reverse "
+                            id="response">
+                            <img class="p-0 col-2 m-3" src="./image/175538168.jpg" alt="">
+                            <p class="col">
+                                外的都覺得，大家都還是大概就啊下一個，一件都是的風格，有這，隱特典今沒有，瘋狂是第一。
+                        
+                                跟你支還希望我會去，戀愛到了的東西便利商⋯蠻好但我漸漸這就可以。
+                        
+                                少讓我覺得活著其實沒想起來，什麼的時夾真的好：一樣是是怎樣，小時覺，其他狀態定將他起來就發混亂看有，肚子見尤其是。不會跟天還歡迎的東好，就您好裡有什我的心喜歡，要這喜歡喜歡真的把自己不是說。
+                        
+                                很可等等這的完全不符，是想希望型這樣對也很比起自己要，的經驗這兩之後最新那些，起來的動畫不錯洗這麼會。
+                            </p>
+                        </div>
+                    </div>
+                    <div class=" toBeDeleted w-100 px-sm-5 d-flex  align-items-center justify-content-center position-absolute bottom-0 start-25 mb-3">
+                        @using (Html.BeginForm("Qagpt", "Qagpt", FormMethod.Post))
+                        {
+                            <input asp-for="QahistoryQ" type="text" class="p-2 w-75" name="inputText" rows="1" id="askQ">
+                            <div class="d-flex justify-content-end align-items-center gap-md-2">
+                                <input type="button" value="Submit" class="btn btn-primary" onclick="submitForm()" />
+                                <button type="button" class="btn btn-secondary p-2" id="micro">
+                                    <img class="w-100 " src="./image/microphone-black-shape.png" alt="">
+                                </button>
+                                <span class="badge text-bg-secondary h-75 fs-6 p-2 rounded-circle d-flex align-items-center d-none d-lg-block">
+                                    0
+                                </span>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+            function submitForm() {
+                var formData = {
+                    inputText: $('#askQ').val()
+                };
+
+                $.ajax({
+                    url: '/Qagpt/Qagpt',  // 將此替換為您的 Controller 和 Action 的路徑
+                    type: 'POST',
+                    data: formData,
+                    success: function (result) {
+                        // 在這裡處理成功的情況
+                        console.log(result);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // 在這裡處理錯誤的情況
+                        console.error(textStatus, errorThrown);
+                    }
+                });
+            }
+
+
+
+            function deleteElements() {
+                $(".toBeDeleted").remove();
+
+                // 建立新的聊天室元素
+                var newChatRoom = `
+                <div class="btn btn-secondary w-100 mt-2 p-2 d-flex justify-content-between ">
+                    <h5 class="m-0">Name</h5>
+                    <button type="button" class="btn-close btn-close-white" aria-label="Close" id="ChatClose"></button>
+                </div>
+                `;
+
+                // 在聊天室列表的頂部新增新的聊天室
+                $("#chatRooms").prepend(newChatRoom);
+
+                //// 將新的聊天室資訊傳送到後端
+                //$.ajax({
+                //    url: '/Controller/Action',  // 替換為您的Controller和Action的路徑
+                //    type: 'POST',
+                //    data: { name: "Name" },  // 替換為聊天室的名稱或其他資訊
+                //    success: function (result) {
+                //        console.log(result);
+                //    }
+                //});
+            }
+
+
+
+        let temRangeVal = $('#rangeValue');
+        let temRangeInput = $('#rangeInput');
+        let StartUse = $("#StartUse");
+        let StartUseBtn = $("#StartUseBtn");
+        let record = $("#History");
+        $(document).ready(function () {
+                var maxRows = 3; // 最大行數限制
+
+                $('#askQ').on('input', function () {
+                    var textarea = $(this);
+                    var lineHeight = parseInt(textarea.css('lineHeight'));
+                    var rows = textarea.val().split("\n").length;
+
+                    if (rows > maxRows) {
+                        textarea.height(lineHeight * maxRows);
+                    } else {
+                        textarea.height(lineHeight * rows);
+                    }
+                });
+            });
+        
+        $('#askQ').click(function () {
+            record.css('display', 'none');
+            record.css('display', 'none');
+            $('#Expand').css({
+                'left': '10px',
+                'top': '200px'
+            });  
+        });
+        $('#Expand').click(function () {
+                var windowWidth = $(window).width() + 15 ;
+                if (record.css('display') === 'none') {
+                    record.css('display', 'block');
+
+                    if (windowWidth <= 575){
+                        $('#Expand').css({
+                            'left': '53%',
+                            'top': '105px'
+                        });
+                        
+                    }
+                    else if (windowWidth <= 767) {
+                        $('#Expand').css({
+                            'left': '30%',
+                            'top': '105px'
+                        }); 
+                    } 
+                    else if (windowWidth <= 1000 && windowWidth >= 768) {
+                        $('#Expand').css({
+                            'left': '18%',
+                            'top': '80px'
+                        });
+                    } 
+                    else{
+                       $('#Expand').css({
+                            'left': '20%',
+                            'top': '80px'
+                        }); 
+                    }
+                } else {
+                    record.css('display', 'none');
+                    $('#Expand').css({
+                        'left': '10px',
+                        'top': '200px'
+                    });  
+                }
+            });
+        $(window).resize(function () {
+            var windowWidth = $(window).width();
+            record.css('display', 'none');
+             if (windowWidth <= 767) {
+                $('#Expand').css({
+                    'left': '10px',
+                    'top': '200px'
+                });  
+            }
+            else{
+                $('#Expand').css({
+                    'left': '10px',
+                    'top': '200px'
+                })
+            }
+        
+        })
+        StartUseBtn.click(function () {
+            StartUse.css("display", "none");
+            record.css("display", "block");
+            var windowWidth = $(window).width();
+            if (windowWidth <= 1000) {
+                $('#Expand').css({
+                    'left': '18%',
+                    'top': '80px'
+                });
+            }
+            else {
+                $('#Expand').css({
+                    'left': '20%',
+                    'top': '80px'
+                });
+            }
+        })
+        
+        temRangeInput.on('input',function(){
+            temRangeVal.text(temRangeInput.val());
+        })
+        let temStyleTag;
+        temRangeInput.on('input', function () {
+            temPercent = temRangeInput.val() * 50;
+            let temStyle = `
+            input[type="range"]::-webkit-slider-runnable-track {
+                background: linear-gradient(to right, rgb(110, 104, 104) ${temPercent}%, rgb(208, 208, 208) 0%);
+            }`;
+
+            // 删除旧的样式标签（如果存在）
+            if (temStyleTag) {
+                temStyleTag.remove();
+            }
+
+            // 创建新的样式标签并添加样式
+            temStyleTag = $('<style>').html(temStyle);
+            $('head').append(temStyleTag);
+        });
+    </script>
+</body>
+
+</html>

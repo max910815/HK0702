@@ -1,0 +1,25 @@
+﻿
+
+@model List<HK_Product.Models.Aifile>
+
+<!-- 在這裡放置其他 HTML 內容 -->
+@if (Model != null && Model.Count > 0)
+{
+    <ul>
+        @foreach (var aifile in Model)
+        {
+            <li>
+                <strong>Aifile ID:</strong> @aifile.AifileId <br />
+                <strong>Aifile Type:</strong> @aifile.AifileType <br />
+                <strong>Aifile Path:</strong> @aifile.AifilePath <br />
+            </li>
+        }
+    </ul>
+
+}
+else
+{
+    <p>No Aifiles found.</p>
+}
+
+<!-- 在這裡放置其他 HTML 內容 -->

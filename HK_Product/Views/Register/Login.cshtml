@@ -1,0 +1,57 @@
+﻿@model HK_Product.ViewModels.LoginViewModel;
+
+<div id="neck" class="w-100 mx-0 bg-secondary-subtle  p-5">
+    <div class="bg-light rounded-4 row flex-md-row flex-column align-items-center justify-content-between text-center col">
+        <div class=" col-md-6 p-5 d-flex flex-column align-items-start border-end">
+            <h1>Sign in</h1>
+        </div>
+        <form asp-action="Login" class="border-start col-md-6 p-5 d-flex flex-column  align-items-start gap-2">
+
+            <label asp-for="Email" class="h3" for="">E-mail</label>
+            <input asp-for="Email" type="email" class="w-75">
+
+            <label asp-for="Password" class="h3 mt-2" for="">Password</label>
+            <input asp-for="Password" type="text" class="w-75">
+
+            <input type="submit" value="submit" class="btn btn-primary p-2 px-5 mt-5" />
+        </form>
+    </div>
+</div>
+<script>
+    var language = document.getElementById("language");
+    var languageChoose = document.querySelectorAll("#languageChoose");
+    let languageData;
+    fetch('./AboutLanguage.json')
+        .then(response => response.json())
+        .then(data => {
+            language.addEventListener("change", function () {
+                for (var item in data) {
+                    if (item == language.value) {
+
+                        languageData = Object.values(data[item]);
+                    }
+                }
+                languageChoose.forEach(function (item, index) {
+
+                    item.innerText = languageData[0][index];
+                })
+            })
+            window.onload = function () {
+                for (var item in data) {
+                    if (item == language.value) {
+
+                        languageData = Object.values(data[item]);
+                    }
+                }
+                languageChoose.forEach(function (item, index) {
+
+                    item.innerText = languageData[0][index];
+                })
+            }
+        })
+        .catch(error => {
+            // 在這裡處理錯誤
+            console.error(error);
+        });
+
+</script>

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HK_Product</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @await RenderSectionAsync("topJS", required: false)
+    @await RenderSectionAsync("topCSS", required: false)
+    <link href="~/viewfile/hackproject.css" rel="stylesheet" />
+    <link href="~/viewfile/aboutlanguage.json" />
+</head>
+<body>
+
+    <header>
+        <partial name="_NavPartial" />
+    </header>
+    <a asp-controller="Embedding" asp-action="readfile"> 載入華電聯網資料庫</a>
+            @RenderBody()
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+  @*  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>*@
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("endJS", required: false)
+    @await RenderSectionAsync("endCSS", required: false)
+</body>
+</html>
