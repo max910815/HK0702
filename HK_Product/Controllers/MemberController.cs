@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic.FileIO;
 using Microsoft.Exchange.WebServices.Data;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace HK_Product.Controllers
 {
@@ -220,6 +223,23 @@ namespace HK_Product.Controllers
                 {
                     _ctx.Update(user);
                     await _ctx.SaveChangesAsync();
+
+                    // 登出以使目前的 Cookie 無效
+                    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    // 建立新的 ClaimsIdentity
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, user.UserId),
+                        new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim(ClaimTypes.Email, user.UserEmail)
+                    };
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    // 登入以生成新的驗證 Cookie
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {

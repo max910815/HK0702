@@ -11,8 +11,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using HK_Product.Helper;
 
 namespace HK_Product.Controllers
 {
@@ -35,71 +38,76 @@ namespace HK_Product.Controllers
         [HttpGet]
         public IActionResult Qagpt()
         {
-            var Name = User.Identity.Name;
-            User user = _ctx.Users.FirstOrDefault(u => u.UserName == Name);
-            List<Chat> chats = _ctx.Chats.Where(u => u.UserId == "U0001").ToList();
+            var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            string userid = claim != null ? claim.Value : null;
 
-            // 在这里，你需要为每个 chat 获取相关的 QAHistory 对象，因此你最终会得到一个 List<List<QAHistory>>
-            List<List<Qahistory>> qaHistories = chats.Select(chat => _ctx.QAHistory.Where(qa => qa.ChatId == chat.ChatId).ToList()).ToList();
+            userid = "U0001";
 
-            List<Application> apps = _ctx.Applications.Where(u => u.UserId == user.UserId).ToList();
+            var chat = _ctx.Chats.Where(c => c.UserId == userid).OrderByDescending(c => c.ChatTime).FirstOrDefault();
+            var qa = _ctx.QAHistory.Where(q => q.ChatId == chat.ChatId).OrderByDescending(q => q.QahistoryId).FirstOrDefault();
+            var user = _ctx.Users.Include(u => u.Applications).FirstOrDefault(u => u.UserId == userid);
 
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Qagpt([Bind("QahistoryQ")] UserqViewModel uq)
-        {
-            var Name = User.Identity.Name;
-            User user = _ctx.Users.FirstOrDefault(u => u.UserName == Name);
-            // 從資料庫中取得所有的聊天訊息並按照時間進行排序
-            var messages = _ctx.QAHistory.OrderBy(m => m.QahistoryQ).ToList();
-
-            var ch = await TranslationService.chCeng("你好");
-
-            return View(messages);
-
-        }
-
-        public static class TranslationService
-        {
-            private static readonly HttpClient client = new HttpClient();
-            private static readonly string key = "c463e5c24e8449079b99d0a617472744";
-            private static readonly string endpoint = "https://api.cognitive.microsofttranslator.com";
-            private static readonly string resourceLocation = "eastasia";
-
-            public static async Task<string> chCeng(string ask)
+            var model = new QagptViewModel
             {
-                string route = "/translate?api-version=3.0&from=zh-Hant&to=en";
-                object[] body = new[] { new { Text = ask } };
-                var requestBody = JsonConvert.SerializeObject(body);
+                Chat = chat,
+                QA = qa,
+                User = user
+            };
 
-                using (var request = new HttpRequestMessage())
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Qagpt(string text)
+        {
+            var ch = await ChCeng.Change(text);
+
+            //OpenpiViewModel openapi = new OpenpiViewModel() 
+            //{
+            //    Appid = ,
+            //    Temperature = "1",
+            //    Chatid = ,
+            //    Q = text,
+            //    Dateid =  
+
+            //};
+            
+            var sim = await Openapi.OpenApi(ch);
+
+            return Json(sim);
+
+        }
+
+        
+        [HttpPost]
+        public async Task<IActionResult> AddChat(string name)
+        {
+            string userid = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).ToString();
+            if (userid != null)
+            {
+                //抓到聊天室model最後一個id
+                Chat chat1 = await _ctx.Chats.OrderByDescending(c => c.ChatId).FirstOrDefaultAsync();
+                string oldchatid = chat1?.ChatId;
+
+                string newChatId = oldchatid.Substring(0, 1) + (int.Parse(oldchatid.Substring(1)) + 1).ToString("D4");
+                //新增聊天室窗
+                Chat chat = new Chat()
                 {
-                    request.Method = HttpMethod.Post;
-                    request.RequestUri = new Uri(endpoint + route);
-                    request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
-                    request.Headers.Add("Ocp-Apim-Subscription-Key", key);
-                    request.Headers.Add("Ocp-Apim-Subscription-Region", resourceLocation);
+                    ChatId = newChatId,
+                    ChatTime = DateTime.Now,
+                    ChatName = "NewChat",
+                    UserId = userid,
+                };
+                _ctx.Chats.Add(chat);
+                await _ctx.SaveChangesAsync();
 
-                    HttpResponseMessage response = await client.SendAsync(request);
-                    string result = await response.Content.ReadAsStringAsync();
-
-                    // Parse the response
-                    TranslationResult[] deserializedOutput = JsonConvert.DeserializeObject<TranslationResult[]>(result);
-                    string translation = deserializedOutput[0].Translations[0].Text;
-                    return translation;
-                }
+                return Json(chat);
             }
-        }
-        public class TranslationResult
-        {
-            public TranslatedText[] Translations { get; set; }
+            return Json(new {success = false});
+
         }
 
-        public class TranslatedText
-        {
-            public string Text { get; set; }
-        }
 
+        
     }
 }

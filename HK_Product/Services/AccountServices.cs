@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HK_Product.Models;
 
 namespace HK_Product.Services
 {
@@ -21,19 +22,21 @@ namespace HK_Product.Services
             _hashService = hashService;
         }
 
-        public async Task<ApplicationUser> AuthenticateUser(LoginViewModel loginVM)
+        public async Task<User> AuthenticateUser(LoginViewModel loginVM)
         {
             //find user
             // _hashService.MD5Hash(loginVM.Password)
             var user = await _ctx.Users
-                .FirstOrDefaultAsync(u => u.UserEmail.ToUpper() == loginVM.Email && u.UserPassword == _hashService.MD5Hash( loginVM.Password));
+                .FirstOrDefaultAsync(u => u.UserEmail.ToUpper() == loginVM.Email.ToUpper() && u.UserPassword == _hashService.MD5Hash( loginVM.Password));
 
             if (user != null)
             {
-                var userInfo = new ApplicationUser
+                var userInfo = new User
                 {
-                    Name = user.UserName,
-                    Email = user.UserEmail,
+                    UserId = user.UserId,
+                    UserName = user.UserName,
+                    UserEmail = user.UserEmail,
+                    UserPassword = user.UserPassword
                     
                 };
 

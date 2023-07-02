@@ -38,18 +38,21 @@
         <!--收縮部分-->
                 <h4>record </h4>
                 <div class="h-50 border-bottom border-secondary-subtle">
-                    <button class="btn btn-secondary w-100 mt-3 p-2" id="NewChat" onclick="deleteElements()" onclick="addChatRoom()">
+                    <button class="btn btn-secondary w-100 mt-3 p-2" id="NewChat" onclick="deleteChatResponses(); addNewChatRoom();">
                         <h5 class="m-0">New Chat</h5>
                     </button>
 
-                    @*foreach*@
-                    <div class="btn btn-secondary w-100 mt-2 p-2 d-flex justify-content-between" id="chatRooms">
-                        <h5 class="m-0">Name</h5>
-                        <button type="button" class="btn-close btn-close-white" aria-label="Close" id="ChatClose"></button>
-                    </div>
-                    
 
+                    <div id="chatRooms">
+                        <!-- 聊天室將被添加到這裡 -->
+                        <div class="btn btn-secondary w-100 mt-2 p-2 d-flex justify-content-between">
+                            <h5 class="m-0">Name</h5>
+                            <button type="button" class="btn-close btn-close-white" aria-label="Close"></button>
+                        </div>
+                    </div>
                 </div>
+
+
                 <label for="">Mode</label>
                 <div class="dropdown mt-1">
                     <button class="w-100 btn btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button"
@@ -102,7 +105,7 @@
             </div>
             <div class="col h-100 row bg-light p-0">
                 <div class="col d-flex flex-column justify-content-between position-relative p-0" id="QABox">
-                    <div class=" flex-column h-100 overflow-y-scroll pb-5 bg-dark-subtle" id="question" id="toBeDeleted">
+                    <div class=" flex-column h-100 overflow-y-scroll pb-5 bg-dark-subtle" id="question" >
         <!--對話部分-->
         <!--AI回的-->
                         <div class=" toBeDeleted border-bottom border-dark-subtle w-100 h-auto bg-dark-subtle p-4 ps-5 row align-items-sm-center justify-content-center m-0 flex-column flex-sm-row" id="response">
@@ -134,7 +137,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class=" toBeDeleted w-100 px-sm-5 d-flex  align-items-center justify-content-center position-absolute bottom-0 start-25 mb-3">
+                    <div class=" w-100 px-sm-5 d-flex  align-items-center justify-content-center position-absolute bottom-0 start-25 mb-3">
                         @using (Html.BeginForm("Qagpt", "Qagpt", FormMethod.Post))
                         {
                             <input asp-for="QahistoryQ" type="text" class="p-2 w-75" name="inputText" rows="1" id="askQ">
@@ -178,32 +181,35 @@
                 });
             }
 
-
-
-            function deleteElements() {
+            function deleteChatResponses() {
+                // 删除带有 'toBeDeleted' class 的所有元素
                 $(".toBeDeleted").remove();
+            }
 
-                // 建立新的聊天室元素
+
+            function addNewChatRoom() {
+                // 創建新的聊天室元素
                 var newChatRoom = `
-                <div class="btn btn-secondary w-100 mt-2 p-2 d-flex justify-content-between ">
-                    <h5 class="m-0">Name</h5>
-                    <button type="button" class="btn-close btn-close-white" aria-label="Close" id="ChatClose"></button>
+                <div class="btn btn-secondary w-100 mt-2 p-2 d-flex justify-content-between">
+                    <h5 class="m-0">NewName</h5>
+                    <button type="button" class="btn-close btn-close-white" aria-label="Close"></button>
                 </div>
                 `;
 
-                // 在聊天室列表的頂部新增新的聊天室
+                // 在聊天室列表的頂部添加新的聊天室
                 $("#chatRooms").prepend(newChatRoom);
 
-                //// 將新的聊天室資訊傳送到後端
-                //$.ajax({
-                //    url: '/Controller/Action',  // 替換為您的Controller和Action的路徑
-                //    type: 'POST',
-                //    data: { name: "Name" },  // 替換為聊天室的名稱或其他資訊
-                //    success: function (result) {
-                //        console.log(result);
-                //    }
-                //});
+                // 如果你需要，你也可以在這裡添加一個 AJAX 請求來向後端發送新的聊天室資訊
+                $.ajax({
+                    url: '/Qagpt/AddChat',
+                    type: 'POST',
+                    success: function (response) {
+                        console.log("Server response:", response);
+
+                    }
+                });
             }
+
 
 
 

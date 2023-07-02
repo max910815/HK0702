@@ -133,7 +133,7 @@ namespace HK_Product.Controllers
             if (ModelState.IsValid)
             {
 
-                ApplicationUser user1 = await _accountServices.AuthenticateUser(loginvm);
+                User user1 = await _accountServices.AuthenticateUser(loginvm);
 
                 if (user1 == null)
                 {
@@ -146,9 +146,9 @@ namespace HK_Product.Controllers
                 //通過以上帳密比對成立後, 以下開始建立授權
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user1.Name),
-                    new Claim(ClaimTypes.Role, user1.Role)   
-                    //new Claim(ClaimTypes.Role, user.Role) // 如果要有「群組、角色、權限」，可以加入這一段  
+                    new Claim(ClaimTypes.NameIdentifier, user1.UserId)  ,
+                    new Claim(ClaimTypes.Name, user1.UserName) ,
+                    new Claim(ClaimTypes.Email, user1.UserEmail)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

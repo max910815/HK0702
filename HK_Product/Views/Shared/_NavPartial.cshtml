@@ -38,7 +38,7 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a class="btn btn-info w-10 fw-bold text-nowrap rounded-circle" id="UserAvatar" asp-controller="Register" asp-action="Signout" type="button">@User.Identity.Name.Substring(0, 1)</a>
+                        <a class="btn btn-info w-10 fw-bold text-nowrap rounded-circle" id="UserAvatar" asp-controller="Register" asp-action="Signout" type="button">@User.Identity.Name?[0]</a>
                     }
                     else
                     {
